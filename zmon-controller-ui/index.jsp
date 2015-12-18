@@ -57,7 +57,14 @@
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="span12">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"><img src="/logo.png"> ZMON 2.0</a>
+                <a class="navbar-brand" href="#">
+                    <svg id="svgLogo" xmlns="http://www.w3.org/2000/svg" height="32" width="32" version="1.1">
+                        <path id="monitor" d="m3.1 1c-1.1 0-2 0.9-2 2v14c0 1 0.9 2 2 2h4.9v2c-0.5 0-1 0-1 1s0.5 1 1 1h8c1 0 1 0 1-1s0-1-1-1v-2h5c1 0 2-1 2-2v-14c0-1.1-1-2-2-2zm0.7 1.5h16.2c1 0 2 0.6 2 1.4v9.1c0 1-1 2-2 2h-16.2c-1 0-1.8-1-1.8-2v-9.1c0-0.8 0.8-1.4 1.8-1.4z" fill="#ff7f2a"/>
+                        <rect id="bar0" height="4.8" width="2.9" y="10" x="5.1"/>
+                        <rect id="bar1" height="9.6" width="2.9" y="5.3" x="8.7"/>
+                        <rect id="bar2" height="7.9" width="2.9" y="7" x="12"/>
+                        <rect id="bar3" height="12" width="2.9" y="3.3" x="16"/>
+                    </svg> ZMON 2.0</a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                   <span class="sr-only">Toggle navigation</span>
                   <span class="icon-bar"></span>

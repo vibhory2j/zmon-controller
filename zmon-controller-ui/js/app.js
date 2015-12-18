@@ -49,6 +49,14 @@ angular.module('zmon2App', [
                     templateUrl: 'views/checkDefinitionView.html',
                     controller: 'CheckDefinitionCtrl'
                 })
+                .when('/check-definitions/add', {
+                    templateUrl: 'views/checkDefinitionEditForm.html',
+                    controller: 'CheckDefinitionEditCtrl'
+                })
+                .when('/check-definitions/edit/:checkDefinitionId', {
+                    templateUrl: 'views/checkDefinitionEditForm.html',
+                    controller: 'CheckDefinitionEditCtrl'
+                })
                 .when('/check-charts/:checkId', {
                     templateUrl: 'views/checkCharts.html',
                     controller: 'CheckChartsCtrl',

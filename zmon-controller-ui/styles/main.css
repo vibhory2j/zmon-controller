@@ -19,6 +19,10 @@ body
     color: #f08533 !important;
 }
 
+.navbar a:hover #monitor {
+     color: #f08533;
+}
+
 .navbar-inverse .navbar-nav > li > a
 {
     height: 100%;

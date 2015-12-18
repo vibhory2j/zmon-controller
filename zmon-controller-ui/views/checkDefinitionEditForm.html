@@ -1,0 +1,143 @@
+<div class="row">
+    <div class="col-md-12" ng-switch="mode">
+        <h1 ng-switch-when="edit">Edit Check Definition</h1>
+        <h1 ng-switch-when="add">Add Check Definition</h1>
+    </div>
+</div>
+
+<form class="form-horizontal" role="form" name="cdForm" novalidate>
+    <div class="form-group" ng-class="{'has-error': cdForm.submitted && cdForm.name.$error.required}">
+        <label for="inp-name" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inp-name" name="name" placeholder="Check name. Must be unique for team!" ng-model="checkDefinition.name" ng-focus="cdForm.submitted && cdForm.name.$error.required" ng-required="true">
+        </div>
+    </div>
+
+    <div class="form-group inp-description" ng-class="{'has-error': cdForm.submitted && cdForm.description.$error.required}">
+        <label for="inp-description" class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="inp-description" name="description" placeholder="Short descriptive text about the check" ng-model="checkDefinition.description" ng-focus="cdForm.submitted && cdForm.description.$error.required" ng-required="true"></textarea>
+            <div class="markdown-preview">
+                <span title="Show live preview" ng-show="!showDescriptionPreview" ng-click="showDescriptionPreview = true">
+                    Show live preview
+                    <i class="fa fa-fw fa-eye" >
+                    </i>
+                </span>
+                <span title="Hide live preview" ng-show="showDescriptionPreview" ng-click="showDescriptionPreview = false">
+                    Hide live preview <i class="fa fa-fw fa-eye-slash" ></i>
+                </span>
+            </div>
+            <div ng-show="showDescriptionPreview" class="form-control" ng-bind-html="checkDefinition.description | markdown"></div>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': cdForm.submitted && cdForm.command.$error.required}" ng-focus="cdForm.submitted">
+        <label for="inp-command" class="col-sm-2 control-label">Check Command</label>
+        <div class="col-sm-10">
+            <div id="inp-command" name="command" class="code-editor" ng-model="checkDefinition.condition" code-language="python" code-editor ng-required="true"></div>
+            <span class="help-block">Valid Python expression to gather the check data.</span>
+        </div>
+    </div>
+    
+   <!-- TODO: INTERVAL  -->
+
+    <div class="form-group" ng-class="{'has-error': cdForm.submitted && cdForm.entities.$error['valid-json'] || cdForm.entities.$error.required }">
+        <label for="inp-entities" class="col-sm-2 control-label">
+            <div>
+                <div id="entity-filter-buttons">
+                    <button type="button" class="btn btn-primary fa fa-keyboard-o" ng-model="entityFilterInputMethod" btn-radio="'text'" title="Plain text input"></button>
+                </div>
+            </div>
+        </label>
+        <div class="col-sm-10">
+            <div id="inp-entities" name="entities" ng-show="entityFilterInputMethod == 'text'" class="code-editor" ng-model="entityFilter.textEntityFilters" json code-editor></div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" ng-class="{'panel-collapsed': !showDetails}">
+        <div class="panel-heading panel-toggle" ng-click="showDetails = !showDetails"><i class="fa fa-fw fa-toggle-{{ showDetails ? 'up' : 'down' }}"></i> Details</div>
+        <div class="panel-body">
+
+            <div class="form-group inp-potential_impact" ng-class="{'has-error': cdForm.submitted && cdForm.potential_impact.$error.required}">
+                <label for="inp-potential_impact" class="col-sm-2 control-label">Potential Impact</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="inp-potential_impact" name="potential_impact" ng-model="checkDefinition.potential_impact" ng-focus="cdForm.submitted && cdForm.potential_impact.$error.required" ng-required="false"></textarea>
+                    <div class="markdown-preview">
+                        <span title="Show live preview" ng-show="!showPotentialImpactPreview" ng-click="showPotentialImpactPreview = true">
+                            Show live preview
+                            <i class="fa fa-fw fa-eye" >
+                            </i>
+                        </span>
+                        <span title="Hide live preview" ng-show="showPotentialImpactPreview" ng-click="showPotentialImpactPreview = false">
+                            Hide live preview <i class="fa fa-fw fa-eye-slash" ></i>
+                        </span>
+                    </div>
+                    <div ng-show="showPotentialImpactPreview" class="form-control" ng-bind-html="checkDefinition.potential_impact | markdown"></div>
+                </div>
+            </div>
+
+            <div class="form-group inp-potential_analysis" ng-class="{'has-error': cdForm.submitted && cdForm.potential_analysis.$error.required}">
+                <label for="inp-potential_analysis" class="col-sm-2 control-label">Potential Analysis</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="inp-potential_analysis" name="potential_analysis" ng-model="checkDefinition.potential_analysis" ng-focus="cdForm.submitted && cdForm.potential_analysis.$error.required" ng-required="false"></textarea>
+                    <div class="markdown-preview">
+                        <span title="Show live preview" ng-show="!showPotentialAnalysisPreview" ng-click="showPotentialAnalysisPreview = true">
+                            Show live preview
+                            <i class="fa fa-fw fa-eye" >
+                            </i>
+                        </span>
+                        <span title="Hide live preview" ng-show="showPotentialAnalysisPreview" ng-click="showPotentialAnalysisPreview = false">
+                            Hide live preview <i class="fa fa-fw fa-eye-slash" ></i>
+                        </span>
+                    </div>
+                    <div ng-show="showPotentialAnalysisPreview" class="form-control" ng-bind-html="checkDefinition.potential_analysis | markdown"></div>
+                </div>
+            </div>
+
+            <div class="form-group inp-potential_solution" ng-class="{'has-error': cdForm.submitted && cdForm.potential_solution.$error.required}">
+                <label for="inp-potential_solution" class="col-sm-2 control-label">Potential Solution</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="inp-potential_solution" name="potential_solution" ng-model="checkDefinition.potential_solution" ng-focus="cdForm.submitted && cdForm.potential_solution.$error.required" ng-required="false"></textarea>
+                    <div class="markdown-preview">
+                        <span title="Show live preview" ng-show="!showPotentialSolutionPreview" ng-click="showPotentialSolutionPreview = true">
+                            Show live preview
+                            <i class="fa fa-fw fa-eye" >
+                            </i>
+                        </span>
+                        <span title="Hide live preview" ng-show="showPotentialSolutionPreview" ng-click="showPotentialSolutionPreview = false">
+                            Hide live preview <i class="fa fa-fw fa-eye-slash" ></i>
+                        </span>
+                    </div>
+                    <div ng-show="showPotentialSolutionPreview" class="form-control" ng-bind-html="checkDefinition.potential_solution | markdown"></div>
+                </div>
+            </div>
+
+
+            <div class="form-group inp-technical_details" ng-class="{'has-error': cdForm.submitted && cdForm.technical_details.$error.required}">
+                <label for="inp-technical_details" class="col-sm-2 control-label">Technical Details</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="inp-technical_details" name="technical_details" ng-model="checkDefinition.technical_details" ng-focus="cdForm.submitted && cdForm.technical_details.$error.required" ng-required="false"></textarea>
+                    <div class="markdown-preview">
+                        <span title="Show live preview" ng-show="!showTechnicalDetailsPreview" ng-click="showTechnicalDetailsPreview = true">
+                            Show live preview
+                            <i class="fa fa-fw fa-eye" >
+                            </i>
+                        </span>
+                        <span title="Hide live preview" ng-show="showTechnicalDetailsPreview" ng-click="showTechnicalDetailsPreview = false">
+                            Hide live preview <i class="fa fa-fw fa-eye-slash" ></i>
+                        </span>
+                    </div>
+                    <div ng-show="showTechnicalDetailsPreview" class="form-control" ng-bind-html="checkDefinition.technical_details | markdown"></div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': cdForm.submitted && cdForm.source_url.$error.required}">
+                <label for="inp-source_url" class="col-sm-2 control-label">Source URL</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inp-source_url" name="source_url" ng-model="checkDefinition.source_url" ng-focus="cdForm.submitted && cdForm.source_url.$error.required" ng-required="false">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
