@@ -40,39 +40,6 @@ angular.module('zmon2App').controller('CheckDefinitionEditCtrl', ['$scope', '$ro
         // Flag to toggle UI on whether user types JSON text or uses form to define the entity filters
         $scope.entityFilterInputMethod = 'text';
         $scope.entityExcludeFilterInputMethod = 'text';
-        
-
-        $scope.parameterTypeOptions = [
-            {
-                'value': 'str',
-                'label': 'String'
-            },
-            {   'value': 'int',
-                'label': 'Integer'
-            },
-            {   'value': 'float',
-                'label': 'Float'
-            },
-            {
-                'value': 'bool',
-                'label': 'Boolean'
-            },
-            {
-                'value': 'date',
-                'label': 'Date'
-            }
-        ];
-
-        $scope.parameterTypeBooleanOptions = [
-            {
-                'value': true,
-                'label': 'True'
-            },
-            {
-                'value': false,
-                'label': 'False'
-            }
-        ];
 
         $scope.INDENT = '    ';
 
@@ -86,20 +53,12 @@ angular.module('zmon2App').controller('CheckDefinitionEditCtrl', ['$scope', '$ro
                     $scope.checkDefinition.notifications = JSON.parse($scope.notificationsJson);
 
                     var check = $scope.checkDefinition;
-
-                    if ($scope.mode === 'add') {
-                        CommunicationService.createCheckDefinition(check).then(function(data) {
-                            FeedbackMessageService.showSuccessMessage('Saved successfully; redirecting...', 500, function() {
-                                $location.path('/check-definition/view/' + data.id);
-                            });
-                        });
-                    } else {
+                    
                         CommunicationService.updateCheckDefinition(check).then(function (data) {
                             FeedbackMessageService.showSuccessMessage('Saved successfully; redirecting...', 500, function () {
                                 $location.path('/check-definition/view/' + data.id);
                             });
                         });
-                    }
                 } catch (ex) {
                     $scope.invalidFormat = true;
                     return FeedbackMessageService.showErrorMessage('JSON format is incorrect' + ex);
@@ -124,50 +83,10 @@ angular.module('zmon2App').controller('CheckDefinitionEditCtrl', ['$scope', '$ro
             CommunicationService.getCheckDefinition($scope.checkDefinitionId).then(
                 function(response) {
                     $scope.checkDefinition = response;
-                    if ($scope.alertDefinition === null) {
-                        $scope.alertDefinition = {
-                            check_definition_id: $scope.checkDefinition.id,
-                            team: $scope.defaultTeam || "",
-                            responsible_team: $scope.defaultRespTeam || "",
-                            entities: [],
-                            entities_exclude: [],
-                            notifications: [],
-                            template: false
-                        };
-                    }
                 }
             );
         };
-
-
-        // Get an alert from a parent Id
-        $scope.getParentAlertDefinition = function(alertId, cb) {
-            CommunicationService.getAlertDefinition(alertId).then(function(data) {
-                $scope.parentAlertDefinition = data;
-                return cb();
-            });
-        }
-
-        // Merge Node (diff) with parent data to have a complete alert definition.
-        $scope.mergeNode = function() {
-            _.each($scope.alertDefinition, function(value, property) {
-                if (value === null && property !== 'parameters') {
-                    $scope.oProps = _.without($scope.oProps, property);
-                    $scope.alertDefinition[property] = angular.copy($scope.parentAlertDefinition[property]);
-                }
-            });
-            if ($scope.alertDefinition.parameters == null && $scope.parentAlertDefinition.parameters) {
-                $scope.alertDefinition.parameters = [];
-            }
-            _.each($scope.alertDefinition.parent_id && $scope.parentAlertDefinition.parameters, function(p, name) {
-                if ($scope.oParams.indexOf(name) === -1) {
-                    $scope.alertParameters.push(_.extend({"name": name}, p));
-                    $scope.alertDefinition.parameters[name] = p;
-                }
-            });
-        };
         
-
         // Reset entity filter to inherit values again
         $scope.resetEntityFilter = function() {
             var entities = $scope.alertDefinition.entities || $scope.parentAlertDefinition.entities || $scope.defaultEntitiesFilter;
@@ -200,94 +119,7 @@ angular.module('zmon2App').controller('CheckDefinitionEditCtrl', ['$scope', '$ro
                 $scope.markAsOverwritten('tags');
             };
         };
-
-        // Remove a tag from the tags array
-        $scope.removeTag = function(tag) {
-            $scope.alertDefinition.tags = _.without($scope.alertDefinition.tags, tag.id);
-            $scope.markAsOverwritten('tags');
-        };
-
-        // Revert only one property back to its inherited parent value
-        $scope.inheritProperty = function(property) {
-            $scope.oProps = _.without($scope.oProps, property);
-
-            if (property === 'entities') {
-                $scope.alertDefinition.entities = angular.copy($scope.parentAlertDefinition.entities);
-                $scope.entityFilter.formEntityFilters = $scope.alertDefinition.entities;
-                if ($scope.alertDefinition.entities) {
-                    return $scope.entityFilter.textEntityFilters = JSON.stringify($scope.alertDefinition.entities, null, $scope.INDENT);
-                }
-                return $scope.entityFilter.textEntityFilters = undefined;
-            }
-
-            if (property === 'entities_exclude') {
-                $scope.alertDefinition.entities_exclude = angular.copy($scope.parentAlertDefinition.entities_exclude);
-                $scope.entityExcludeFilter.formEntityFilters = $scope.alertDefinition.entities_exclude;
-                if ($scope.alertDefinition.entities_exclude) {
-                    return $scope.entityExcludeFilter.textEntityFilters = JSON.stringify($scope.alertDefinition.entities_exclude, null, $scope.INDENT);
-                }
-                return $scope.entityExcludeFilter.textEntityFilters = undefined;
-            }
-
-            if (property === 'notifications') {
-                if ($scope.parentAlertDefinition.notifications) {
-                    $scope.alertDefinition.notifications = angular.copy($scope.parentAlertDefinition.notifications);
-                    return $scope.notificationsJson = JSON.stringify($scope.alertDefinition.notifications, null, $scope.INDENT);
-                }
-                return $scope.notificationsJson = undefined;
-            }
-
-            $scope.alertDefinition[property] = $scope.parentAlertDefinition[property];
-        };
-
-        // Revert only one parameter back to its inherited parent value
-        $scope.inheritParameter = function(param) {
-            $scope.oParams = _.without($scope.oParams, param);
-            _.each($scope.alertParameters, function(p) {
-                if (p.name === param) {
-                    _.extend(p, $scope.parentAlertDefinition.parameters[param]);
-                };
-            });
-        };
-
-        // Show Markdown preview
-        $scope.showPreview = function() {
-            $scope.showDescriptionPreview = !$scope.showDescriptionPreview;
-        };
-
-        // Verify if a property is being inherited from the parent alert
-        $scope.isInheriting = function(p) {
-            if ($scope.oProps.indexOf(p) === -1) {
-                return true;
-            }
-            return false;
-        };
-
-        // Verify if a parameter is being inherited from the parent alert
-        $scope.paramIsInheriting = function(p) {
-            if ($scope.oParams.indexOf(p) === -1 && $scope.alertDefinition.parent_id && $scope.parentAlertDefinition.parameters && $scope.parentAlertDefinition.parameters[p]) {
-                return true;
-            }
-            return false;
-        };
-
-        // Verify if a parameter is present in the parent alert
-        $scope.paramIsInParent = function(p) {
-            if ($scope.alertDefinition.parent_id && $scope.parentAlertDefinition.parameters && $scope.parentAlertDefinition.parameters[p]) {
-                return true;
-            }
-            return false;
-        };
-
-        // Check wether a property is overwritten or inherited from parent alert
-        $scope.isOverwritten = function(p) {
-            if ($scope.oProps.indexOf(p) !== -1 && ($scope.mode == 'inherit' ||
-                ($scope.alertDefinition && $scope.alertDefinition.parent_id))) {
-                    return true;
-            }
-            return false;
-        };
-
+        
         // Validate a parameter's name to be a valid python variable name
         $scope.paramNameIsValid = function(name) {
             var re = /^[_a-zA-Z][_a-zA-Z0-9]*/;
@@ -300,15 +132,6 @@ angular.module('zmon2App').controller('CheckDefinitionEditCtrl', ['$scope', '$ro
         };
 
         $scope.format = 'dd.MM.yyyy';
-
-        // One-time set of the entityFilter.formEntityFilters and entityFilter.textEntityFilters when the alert definition arrives from backend
-        $scope.$watch('alertDefinition', function() {
-            if ($scope.alertDefinition !== null) {
-                $scope.resetEntityFilter();
-                $scope.resetEntityExcludeFilter();
-                $scope.resetNotifications();
-            }
-        });
 
         // If entity filter input method is 'form', reflect changes of entityFilter.formEntityFilters on entityFilter.textEntityFilters
         $scope.$watch('entityFilter.formEntityFilters', function() {

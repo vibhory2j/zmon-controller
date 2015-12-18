@@ -209,6 +209,24 @@ angular.module('zmon2App').factory('CommunicationService', ['$http', '$q', '$log
             return doHttpCall("GET", "rest/checkDefinition", params);
         };
 
+        service.updateCheckDefinition = function(def) {
+            var deferred = $q.defer();
+            
+            $http({
+                method: 'POST',
+                url: 'rest/updateCheckDefinition',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: def
+            }).success(function(data, status, headers, config) {
+                deferred.resolve(data);
+            }).error(function(data, status, headers, config) {
+                deferred.reject(status);
+            });
+            return deferred.promise;
+        };
+
         service.getStatus = function() {
             return doHttpCall("GET", "rest/status");
         };
