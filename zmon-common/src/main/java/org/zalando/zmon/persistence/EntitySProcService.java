@@ -23,4 +23,7 @@ public interface EntitySProcService {
 
     @SProcCall
     List<String> deleteEntity(@SProcParam String id, @SProcParam List<String> teams, @SProcParam String userName);
+
+    @SProcCall
+    int deleteRegion(@SProcParam String infrastructureAccount, @SProcParam String region, @SProcParam String createdBy);
 }

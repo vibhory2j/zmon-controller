@@ -18,6 +18,7 @@ import org.zalando.zmon.persistence.EntitySProcService;
 import org.zalando.zmon.security.permission.DefaultZMonPermissionService;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
@@ -121,4 +122,13 @@ public class EntityApi {
         return ids.size();
     }
 
+    @ResponseBody
+    @RequestMapping(value="/regions/{region}", method = RequestMethod.DELETE)
+    public ResponseEntity<Integer> deleteRegion(@PathParam(value="region") String region, @RequestParam(name = "infrastructure_account") String account, @RequestParam(name="created_by") String createdBy) {
+        if(!authService.hasAdminAuthority()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        return new ResponseEntity<>(entitySprocs.deleteRegion(account, region, createdBy), HttpStatus.OK);
+    }
 }
