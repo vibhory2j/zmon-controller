@@ -38,6 +38,12 @@ public class WebMvcConfig {
 
                 // automatically serve/expose all static files in the "public" folder
                 registry.addResourceHandler("/**").addResourceLocations(localStaticResources, "classpath:public/");
+
+                final String localStaticResourcesV2 = "file:" + Paths.get("zmon-controller-ui-angular2").toAbsolutePath().toString() + "/";
+                log.info("Using local static resources from {}", localStaticResourcesV2);
+
+                // automatically serve/expose all static files in the "public" folder
+                registry.addResourceHandler("/v2/**").addResourceLocations(localStaticResourcesV2, "classpath:public/");
             }
         };
     }
