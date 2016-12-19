@@ -25,6 +25,10 @@
                 <targetPath>${output-directory}/app</targetPath>
             </resource>
             <resource>
+                <directory>lib</directory>
+                <targetPath>${output-directory}/lib</targetPath>
+            </resource>
+            <resource>
                 <directory>styles</directory>
                 <targetPath>${output-directory}/styles</targetPath>
             </resource>

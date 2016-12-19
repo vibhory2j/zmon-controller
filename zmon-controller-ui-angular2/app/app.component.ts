@@ -9,14 +9,15 @@ export class AppComponent implements OnInit {
   alerts: Alert[];
 
   constructor(private alertService: AlertService) {
+    console.log('Creating AppComponent...');
     this.alertService = alertService;
   }
 
-  getAlerts(): void {
-    this.alertService.getAlerts().subscribe(alerts => this.alerts = alerts);
+  updateAlerts(alerts: Alert[]): void {
+    this.alerts = alerts;
   }
 
   ngOnInit(): void {
-    this.getAlerts();
+    this.alertService.getAlerts().subscribe(alerts => this.updateAlerts(alerts));
   }
 }
