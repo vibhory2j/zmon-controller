@@ -83,7 +83,17 @@
                         <phase>initialize</phase>
                     </execution>
                     <execution>
-                        <id>npm run tsc</id>
+                        <id>rxjs build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run rxjs</arguments>
+                        </configuration>
+                        <phase>prepare-package</phase>
+                    </execution>
+                    <execution>
+                        <id>npm build</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>

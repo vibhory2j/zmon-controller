@@ -1,1 +1,8 @@
-<div *ngFor="let alert of alerts">{{ alert.alert_definition.name }}</div>
+<div>
+    <button [class.active]="isEnabled(k)" (click)="toggleTag(k)" *ngFor="let k of tagKeys">{{k}} ({{tags[k]}})</button>
+</div>
+<div (click)="onSelect(alert)" *ngFor="let alert of alerts">{{ alert.alert_definition.name }}
+    <div></div>
+    <ul><li *ngFor="let entity of alert.entities">{{ entity.entity }}</li></ul>
+</div>
+<alert-details [alert]="selectedAlert"></alert-details>

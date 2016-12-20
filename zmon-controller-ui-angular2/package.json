@@ -11,7 +11,8 @@
     "test": "tsc && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
     "test-once": "tsc && karma start karma.conf.js --single-run",
     "tsc": "tsc",
-    "tsc:w": "tsc -w"
+    "tsc:w": "tsc -w",
+    "rxjs": "node build_rxjs.js"
   },
   "keywords": [],
   "author": "",
@@ -52,7 +53,8 @@
     "rimraf": "^2.5.4",
     "@types/node": "^6.0.46",
     "@types/jasmine": "^2.5.36",
-    "@types/selenium-webdriver": "^2.53.33"
+    "@types/selenium-webdriver": "2.53.33",
+    "systemjs-builder": "0.15.34"
   },
   "repository": {}
 }
