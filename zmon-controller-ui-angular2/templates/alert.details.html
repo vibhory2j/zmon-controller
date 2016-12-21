@@ -1,3 +1,8 @@
-<div *ngIf="alert">
-ALERT DETAILS: {{ alert.alert_definition.name }}
+<div *ngIf="alert">    
+    <div style="border: 10px solid #DDD; padding: 10px;">
+        <h1>{{ alert.alert_definition.name }}</h1>
+        <div *ngFor="let entity of alert.entities">
+            {{ entity.entity}}
+        </div>
+    </div>
 </div>

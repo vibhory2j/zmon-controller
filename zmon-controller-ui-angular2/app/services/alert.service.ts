@@ -6,10 +6,19 @@ export class AlertDefinition {
     id: number;
     name: string;
     tags: string[];
+    priority: number;
+}
+
+export class AlertValue {
+    start_time: number;
+    captures: Map<string, string>;
+    value: string;
+    worker: string;
 }
 
 export class Entity {
     entity: string;
+    result: AlertValue;
 }
 
 export class Alert {

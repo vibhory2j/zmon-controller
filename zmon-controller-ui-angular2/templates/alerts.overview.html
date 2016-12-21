@@ -1,8 +1,16 @@
-<div>
-    <button [class.active]="isEnabled(k)" (click)="toggleTag(k)" *ngFor="let k of tagKeys">{{k}} ({{tags[k]}})</button>
+<div class="container-fluid">
+<div class="row">
+<div class="col-lg-3 col-md-3">
+    <div>
+        <div class="tag-button" [class.active-tag]="isEnabled(k)" (click)="toggleTag(k)" *ngFor="let k of tagKeys">{{k}} ({{tags[k]}})</div>
+    </div>
+    <div class="clear"></div>
+    <div class="alert-item" [class.red]="alert.alert_definition.priority == 3" [class.yellow]="alert.alert_definition.priority == 2" (click)="onSelect(alert)" *ngFor="let alert of alerts">
+    <b>{{ alert.alert_definition.name }}</b> ({{ alert.alert_definition.priority}})
+    </div>
 </div>
-<div (click)="onSelect(alert)" *ngFor="let alert of alerts">{{ alert.alert_definition.name }}
-    <div></div>
-    <ul><li *ngFor="let entity of alert.entities">{{ entity.entity }}</li></ul>
-</div>
+<div class="col-lg-9 col-md-9">
 <alert-details [alert]="selectedAlert"></alert-details>
+</div>
+</div>
+</div>

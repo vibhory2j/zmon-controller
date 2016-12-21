@@ -3,8 +3,7 @@ import { Alert, AlertDefinition, Entity, AlertService } from './services/alert.s
 
 @Component({
   selector: 'zmon-app',
-  templateUrl: 'templates/alerts.overview.html',
-  styles: ['.active {background-color: red};']
+  templateUrl: 'templates/alerts.overview.html'
 })
 export class AppComponent implements OnInit {
   alerts: Alert[];
