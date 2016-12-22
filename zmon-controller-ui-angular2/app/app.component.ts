@@ -14,7 +14,6 @@ export class AppComponent implements OnInit {
 
   constructor(private alertService: AlertService) {
     console.log('Creating AppComponent...');
-    this.alertService = alertService;
     this.activeTag = null;
     this.tags = new Map();
   }

@@ -26,6 +26,17 @@ export class Alert {
     entities: Entity[];
 }
 
+export class DataPoint {
+    ts: number;
+    td: number;
+    value: Object;
+}
+
+export class DataResult {
+    entity: string;
+    results: Array<DataPoint>;
+}
+
 @Injectable()
 export class AlertService {
 
@@ -38,5 +49,11 @@ export class AlertService {
         return Observable.interval(3000).switchMap(() => this.http
                .get('/rest/allAlerts?team=*')
         .map((r: Response) => { return r.json() as Alert[]; } ));
+    }
+
+    getAlertAndCheckData(alertId: number, limit: number): Observable<DataResult[]> {
+        return Observable.interval(15000).switchMap(() => this.http
+               .get(`/rest/checkAlertResults?alert_id=${alertId}&limit=${limit}`)
+        .map((r: Response) => { return r.json() as DataResult[]; } ));
     }
 }
