@@ -7,7 +7,11 @@
   "bugs": {
     "url": "https://github.com/zalando/zmon-controller/issues"
   },
-  "keywords": [ "zmon", "zmon-controller", "zalando" ],
+  "keywords": [
+    "zmon",
+    "zmon-controller",
+    "zalando"
+  ],
   "scripts": {
     "start": "ng serve --proxy-config proxy.conf.json",
     "e2e": "protractor",
@@ -29,6 +33,7 @@
     "@angular/router": "~3.4.0",
     "angular-in-memory-web-api": "~0.2.2",
     "core-js": "^2.4.1",
+    "ng2-bootstrap": "^1.2.2",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.1",
     "systemjs": "0.19.40",
