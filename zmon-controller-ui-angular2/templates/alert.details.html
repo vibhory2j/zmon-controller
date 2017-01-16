@@ -1,0 +1,22 @@
+<div *ngIf="alert">    
+    <div style="border: 10px solid #DDD; padding: 10px;">
+        <h1>{{ alert.alert_definition.name }}</h1>
+        <table class="table table-striped">
+        <tr>
+            <td></td>
+            <td *ngFor="let k of valueKeys">{{k}}</td>
+        <tr>
+        <tr *ngFor="let entity of alert.entities">
+            <td (click)="selectEntity(entity.entity)">{{ entity.entity }}</td>
+            <td *ngFor="let k of valueKeys">{{values.get(entity.entity).get(k)}}</td>
+        </tr>
+        </table>
+
+        <div *ngIf="entity">
+            <h2>{{entity}}</h2>
+            <div *ngFor="let k of valueKeys"><h3>{{k}}</h3>
+                <div id="flot-1" style="width:300px; height:180px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
