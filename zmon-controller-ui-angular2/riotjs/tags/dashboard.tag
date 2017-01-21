@@ -1,22 +1,37 @@
-<dashboard>    
-    <div class="container">
-        <div class="flex">
-            <div class="flex col">
-                <div class="flex element">
-                    <div id="alert-list">
-                        <div each={ alerts }>{ name }</div>
-                    </div>
-                </div>
+<dashboard>
+    <div class="dashboard-body">
+        <div class="alert-navi">
+            <div id="alert-list">
+                <div each={ alerts }><div>{ name }</div></div>
             </div>
-            <alert-details alert={ opts.alert_def } check={ opts.check_def }></alert-details>
+        </div>
+
+        <div class="alert-body">
+            <alert-details entities={ opts.entities } 
+                           alert={ opts.alert_def } 
+                           check={ opts.check_def }
+                           entitygroups={ this.entity_groups }></alert-details>
         </div>
     </div>
 
 
     <script type="es6">
     this.alerts = opts.alerts.map(x => {
-        return {name: x.alert_definition.name}
+        return { name: x.alert_definition.name }
     })
+
+    let groupByApplicationId = (groups, e) => {
+        if (!(e.application_id in groups)) {
+            groups[e.application_id] = {entities2: [e]};
+        }
+        else {
+            groups[e.application_id]["entities2"].push(e)
+        }
+        return groups
+    }
+
+    this.entity_groups = Object.values(opts.entities_details.reduce( groupByApplicationId, {}));
+
     </script>
 </dashboard>
 
@@ -40,6 +55,8 @@
                 <pre>{ opts.alert.condition}</pre>
                 </div>
             </div>
+            <entity-block each={ this.opts.entitygroups } group={ entities2 }>
+            </entity-block>
     </div>
     <div class="flex col struct-details">
         <div class="flex element"><div class="content"><h2>Check: {opts.check.name}</h2></div></div>
@@ -57,4 +74,20 @@
             </div>
         </div>
     </div>
+    <script type="es6">
+    </script>
 </alert-details>
+
+<entity-block>
+    <div class="flex">
+        <div class="element">
+            <div class="content"><h3>Application ID: { opts.group[0].application_id }</h3>
+                <div each={ opts.group }>
+                    { id }
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="es6">
+    </script>
+</entity-block>
