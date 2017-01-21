@@ -1,0 +1,64 @@
+.container, 
+.element {
+	padding: 5px;
+    background: lightgrey;    
+    border: 1px solid black;
+}
+
+.container {
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+    box-sizing: flex;
+}
+
+.row {
+    flex-flow: row wrap;
+}
+
+.col {
+    flex-flow: column wrap;
+}
+
+.element {
+    min-width: 100px;
+}
+
+.element div {
+    background: white;
+}
+
+.content {
+    flex: 1 100%;
+    padding: 5px;
+}
+
+.structure {
+    min-height: 240px;
+}
+
+#alert-list div {
+    border: 1px solid black;
+    color: red;
+    font-size: 18px;
+    list-style: none;
+    padding: 5px;
+}
+
+.struct-details {
+    flex: 1 100%;
+}
+
+.a-title {
+    flex: 1 70%;
+}
+
+.a-team {
+    flex: 1 70%;
+}
+
+.a-id {
+    flex: 1 30%;
+}
