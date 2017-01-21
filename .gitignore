@@ -1,3 +1,5 @@
+node_modules
+zmon-controller-ui-angular2/riotjs/tags/*.js
 .idea
 *.iml
 .*.un~
