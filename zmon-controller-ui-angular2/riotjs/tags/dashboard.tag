@@ -2,7 +2,10 @@
     <div class="dashboard-body">
         <div class="alert-navi">
             <div id="alert-list">
-                <div each={ alerts }><div>{ name }</div></div>
+                <div each={ alerts }>
+                    <div>{ name }</div>
+                    <div>{ count }</div>
+                </div>
             </div>
         </div>
 
@@ -22,7 +25,7 @@
         console.log("opts", this.opts)
         
         this.alerts = this.opts.alerts.alerts.map(x => {
-                return { name: x.alert_definition.name }
+                return { name: x.alert_definition.name, count: x.entities.length }
             })
 
         console.log("this.alerts", this.alerts);
@@ -70,7 +73,7 @@
                 <pre>{ opts.alert.condition}</pre>
                 </div>
             </div>
-            <div class="flex a-entity-groups">
+            <div class="flex a-entity-groups row">
                 <entity-block each={ this.opts.entitygroups } group={ entities }>
                 </entity-block>
             </div>

@@ -65,16 +65,31 @@ h1, h2, h3 {
 }
 
 #alert-list div {
-    padding: 4px;
+    padding: 5px;
     background: lightgrey;
+    position: relative;
 }
 
-#alert-list div div {
+#alert-list > div > div:nth-child(1) {
     border: 1px solid black;
     color: black;
     background: red;
     font-size: 18px;
     padding: 10px;
+    min-height:50px;
+}
+
+#alert-list > div > div:nth-child(2) {    
+    color: white;
+    position: absolute;
+    background: orangered;
+    border: 1px solid white;
+    right: 0px;
+    bottom: 0px;
+    font-size: 18px;
+    padding: 10px;
+    font-weight: bold;
+    margin: 5px;
 }
 
 .struct-details {
