@@ -1,7 +1,8 @@
-.body {
-    display: flex;
-    flex-direction: column;
+body {
+    font-family: 'Roboto 300', sans-serif;
 }
+
+
 
 .alert-navi {
     flex: 0 0 350px;
@@ -25,6 +26,7 @@
 
 h1, h2, h3 {
     margin-top: 5px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .container {
