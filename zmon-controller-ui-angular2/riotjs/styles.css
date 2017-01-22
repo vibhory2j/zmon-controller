@@ -90,3 +90,12 @@ h1, h2, h3 {
 .a-id {
     flex: 1 30%;
 }
+
+.a-entity-groups {
+    flex: 1 100%;
+    align-items: stretch;
+}
+
+.a-entity-group {
+    flex: 1 20%;
+}

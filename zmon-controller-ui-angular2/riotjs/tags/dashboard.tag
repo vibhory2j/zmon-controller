@@ -16,16 +16,31 @@
 
 
     <script type="es6">
-    this.alerts = opts.alerts.map(x => {
-        return { name: x.alert_definition.name }
+    this.alerts = []
+
+    this.calcAlertList = () => {
+        console.log("opts", this.opts)
+        
+        this.alerts = this.opts.alerts.alerts.map(x => {
+                return { name: x.alert_definition.name }
+            })
+
+        console.log("this.alerts", this.alerts);
+        return true;
+    }
+
+    this.on('update', function() {
+        console.log("update triggered");
+        this.calcAlertList();
+        
     })
 
     let groupByApplicationId = (groups, e) => {
         if (!(e.application_id in groups)) {
-            groups[e.application_id] = {entities2: [e]};
+            groups[e.application_id] = {entities: [e]};
         }
         else {
-            groups[e.application_id]["entities2"].push(e)
+            groups[e.application_id]["entities"].push(e)
         }
         return groups
     }
@@ -55,8 +70,10 @@
                 <pre>{ opts.alert.condition}</pre>
                 </div>
             </div>
-            <entity-block each={ this.opts.entitygroups } group={ entities2 }>
-            </entity-block>
+            <div class="flex a-entity-groups">
+                <entity-block each={ this.opts.entitygroups } group={ entities }>
+                </entity-block>
+            </div>
     </div>
     <div class="flex col struct-details">
         <div class="flex element"><div class="content"><h2>Check: {opts.check.name}</h2></div></div>
@@ -79,8 +96,8 @@
 </alert-details>
 
 <entity-block>
-    <div class="flex">
-        <div class="element">
+    <div class="flex a-entity-groups">
+        <div class="flex element a-entity-group">
             <div class="content"><h3>Application ID: { opts.group[0].application_id }</h3>
                 <div each={ opts.group }>
                     { id }
