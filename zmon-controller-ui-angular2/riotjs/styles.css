@@ -1,0 +1,118 @@
+body {
+    font-family: 'Roboto 300', sans-serif;
+}
+
+
+
+.alert-navi {
+    flex: 0 0 350px;
+}
+
+.alert-body {
+    flex: 1
+}
+
+.dashboard-body {
+    display: flex;
+    flex: 1;
+}
+
+.container, 
+.element {
+	padding: 10px;
+    background: lightgrey;    
+    border: 0px solid black;
+}
+
+h1, h2, h3 {
+    margin-top: 5px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.flex {
+    display: flex;
+    box-sizing: flex;
+}
+
+.row {
+    flex-flow: row wrap;
+}
+
+.col {
+    flex-flow: column wrap;
+}
+
+.element {
+    min-width: 100px;
+}
+
+.element div {
+    background: white;
+}
+
+.content {
+    flex: 1 100%;
+    padding: 10px;
+}
+
+.structure {
+    min-height: 240px;
+}
+
+#alert-list div {
+    padding: 5px;
+    background: lightgrey;
+    position: relative;
+}
+
+#alert-list > div > div:nth-child(1) {
+    border: 1px solid black;
+    color: black;
+    background: red;
+    font-size: 18px;
+    padding: 10px;
+    min-height:50px;
+}
+
+#alert-list > div > div:nth-child(2) {    
+    color: white;
+    position: absolute;
+    background: orangered;
+    border: 1px solid white;
+    right: 0px;
+    bottom: 0px;
+    font-size: 18px;
+    padding: 10px;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.struct-details {
+    flex: 1 100%;
+}
+
+.a-title {
+    flex: 1 70%;
+}
+
+.a-team {
+    flex: 1 70%;
+}
+
+.a-id {
+    flex: 1 30%;
+}
+
+.a-entity-groups {
+    flex: 1 100%;
+    align-items: stretch;
+}
+
+.a-entity-group {
+    flex: 1 20%;
+}

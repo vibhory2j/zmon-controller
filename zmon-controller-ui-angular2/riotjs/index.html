@@ -1,0 +1,59 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>ZMON with RIOTJS</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300,400" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+
+<header>Top Menu</header>
+<dashboard></dashboard>
+<footer>Footer</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
+<script src="tags/dashboard.js" type="text/javascript"></script>
+<script src="tags/alert.js" type="text/javascript"></script>
+
+<script>
+    var check_def = {"id":8,"name":"Metrics for ZMON Cloud entities","description":"Get Application API metrics from the different services","technical_details":null,"potential_analysis":null,"potential_impact":null,"potential_solution":null,"owning_team":"ZMON","entities":[{"type":"instance"}],"interval":60,"command":"def check():\n  p = sorted(entity['ports'].values())[0]\n  r = http('{}://{}:{}/metrics'.format(entity['proto'], entity['host'], p), verify=False, timeout=2).actuator_metrics()\n  r[\"metrics\"] = {\"GET\": {\"200\": {\"mRate\": 0, \"count\": 0, \"75th\": 0, \"99th\": 0, \"median\": 0, \"min\": 0, \"max\": 0}}}\n  return r","status":"ACTIVE","source_url":null,"last_modified_by":"demotoken","last_modified":1485003747443}
+
+    var entities_details = [{ "id": "zmon-scheduler-localhost[dc:1]", "host": "localhost", "type": "instance", "ports": { "8085": 8085 }, "proto": "http", "last_modified": "2017-01-21 13:02:29.981332", "application_id": "zmon-scheduler", "application_version": 1, "infrastructure_account": "dc:1" }, 
+                            { "id": "zmon-scheduler-localhost-2[dc:1]", "host": "localhost", "type": "instance", "ports": { "8085": 8085 }, "proto": "http", "last_modified": "2017-01-21 13:02:29.981332", "application_id": "zmon-scheduler", "application_version": 1, "infrastructure_account": "dc:1" }, 
+                            { "id": "zmon-metric-cache-localhost[dc:1]", "host": "localhost", "type": "instance", "ports": { "8086": 8086 }, "proto": "http", "last_modified": "2017-01-21 13:02:29.99013", "application_id": "zmon-metric-cache", "application_version": 1, "infrastructure_account": "dc:1" }, 
+                            { "id": "zmon-controller-localhost[dc:1]", "host": "localhost", "type": "instance", "ports": { "7979": 7979, "8443": 8443 }, "proto": "https", "last_modified": "2017-01-21 13:02:29.998057", "application_id": "zmon-controller", "application_version": 1, "infrastructure_account": "dc:1" },
+                            { "id": "zmon-eventlog-service-localhost[dc:1]", "host": "localhost", "type": "instance", "ports": { "8081": 8081 }, "proto": "http", "last_modified": "2017-01-21 13:02:30.005648", "application_id": "zmon-eventlog-service", "application_version": 1, "infrastructure_account": "dc:1" }]
+
+    var alert_def = {"id":9,"name":"Gather API metric data","description":"Dummy alert to collect data.","team":"ZMON","responsible_team":"ZMON","entities":[],"entities_exclude":[],"condition":"False","notifications":[],"check_definition_id":9,"status":"ACTIVE","priority":3,"last_modified":1485003754090,"last_modified_by":"demotoken","period":"","template":false,"parent_id":null,"parameters":null,"tags":null,"editable":true,"cloneable":true,"deletable":true}
+
+    var entities = [{"id":"zmon-metric-cache-localhost[dc:1]"},{"id":"zmon-eventlog-service-localhost[dc:1]"},{"id":"zmon-scheduler-localhost[dc:1]"},{"id":"zmon-controller-localhost[dc:1]"}]
+    
+    var alert_data = [{"entity":"zmon-scheduler-localhost[dc:1]","results":[{"td":0.014912,"worker":"plocal.zmon","ts":1.485034930742858E9,"value":{"metrics":{"GET":{"200":{"count":0,"75th":0,"min":0,"max":0,"mRate":0,"median":0,"99th":0}}}},"captures":{}}],"active_alert_ids":[9]},{"entity":"zmon-metric-cache-localhost[dc:1]","results":[{"td":0.004992,"worker":"plocal.zmon","ts":1.485034930743955E9,"value":"HTTP request failed for http://localhost:8086/metrics: connection failed","exc":1,"captures":{}}],"active_alert_ids":[9]},{"entity":"zmon-controller-localhost[dc:1]","results":[{"td":0.078354,"worker":"plocal.zmon","ts":1.485034930742611E9,"value":{"rest.dashboard":{"GET":{"200":{"75th":5,"count":449,"min":2,"max":31,"mRate":2.32048999754779E-194,"median":4,"99th":7,"mean":3}}},"metrics":{"GET":{"200":{"count":0,"75th":0,"min":0,"max":0,"mRate":0,"median":0,"99th":0}}},"rest.allTags":{"GET":{"200":{"count":6,"75th":3,"min":2,"max":6,"mRate":3.1649374382572824E-198,"median":3,"99th":3,"mean":2}}},"rest.checkResultsChart":{"GET":{"200":{"count":3026,"75th":5,"min":1,"max":22,"99th":17,"median":3,"mRate":1.4247479367147005E-193,"mean":4}}},"rest.alertsById":{"GET":{"200":{"75th":2,"count":230,"min":1,"max":15,"99th":4,"median":1,"mRate":1.2087946604408316E-194,"mean":1}}},"rest.comments":{"GET":{"200":{"75th":4,"count":200,"min":1,"max":14,"mRate":1.9098330321301925E-198,"median":3,"99th":9,"mean":3}}},"rest.status":{"GET":{"200":{"75th":3,"count":286,"min":1,"max":93,"99th":5,"median":2,"mRate":2.8241353984657346E-194,"mean":2}}},"star-star":{"GET":{"200":{"75th":17,"count":599,"min":1,"max":61,"mRate":2.9524702408151964E-193,"median":6,"99th":56,"mean":11},"404":{"75th":3,"count":1,"min":3,"max":3,"99th":3,"median":3,"mRate":1.0209964140013889E-218,"mean":3}}},"rest.alertHistory":{"GET":{"200":{"75th":26,"count":5,"min":19,"max":91,"mRate":5.486829148359059E-199,"median":26,"99th":26,"mean":22}}},"rest.alertCoverage":{"POST":{"200":{"count":1,"75th":22,"min":22,"max":22,"mRate":5.579377254639231E-198,"median":22,"99th":22,"mean":22}}},"unmapped":{"GET":{"302":{"count":535,"75th":1,"min":0,"max":7069,"mRate":0.016677189106297105,"median":1,"99th":1,"mean":0},"401":{"75th":2,"count":9,"min":1,"max":18,"99th":2,"median":1,"mRate":1.5152988745841967E-194,"mean":1}}},"rest.allDashboards":{"GET":{"200":{"75th":2,"count":9,"min":2,"max":34,"99th":2,"median":2,"mRate":1.9995225116720733E-194,"mean":2}}},"rest.checkResults":{"GET":{"200":{"count":229,"75th":5,"min":2,"max":26,"mRate":1.2087536170410513E-194,"median":4,"99th":23,"mean":6}}},"rest.entities":{"POST":{"200":{"75th":3,"count":200,"min":1,"max":7,"99th":7,"median":3,"mRate":1.9098330377329202E-198,"mean":2}}},"rest.checkDefinition":{"GET":{"200":{"count":200,"75th":8,"min":2,"max":30,"mRate":1.9098330321301925E-198,"median":7,"99th":14,"mean":6}}},"api.v1.checks.all-active-alert-definitions":{"HEAD":{"200":{"75th":3,"count":514,"min":1,"max":20,"99th":4,"median":2,"mRate":0.015343754688965648,"mean":2}},"GET":{"200":{"75th":20,"count":2,"min":16,"max":20,"mRate":6.191537594041814E-226,"median":20,"99th":20,"mean":19}}},"api.v1.alert-definitions.root":{"POST":{"200":{"count":11,"75th":34,"min":11,"max":63,"99th":63,"median":16,"mRate":5.326468120725409E-226,"mean":23}}},"api.v1.dashboard.root":{"POST":{"200":{"75th":22,"count":1,"min":22,"max":22,"99th":22,"median":22,"mRate":4.842243746114044E-227,"mean":22}}},"rest.downtimes":{"GET":{"200":{"75th":4,"count":200,"min":1,"max":17,"99th":10,"median":2,"mRate":1.9098330321301925E-198,"mean":3}}},"rest.allAlerts":{"GET":{"200":{"count":443,"75th":8,"min":3,"max":58,"99th":10,"median":6,"mRate":2.3201735038039605E-194,"mean":6}}},"rest.alertDefinitions":{"GET":{"200":{"75th":10,"count":1,"min":10,"max":10,"mRate":5.579377254639231E-198,"median":10,"99th":10,"mean":10}}},"rest.entityProperties":{"GET":{"200":{"count":1,"75th":48,"min":48,"max":48,"99th":48,"median":48,"mRate":5.579377254639231E-198,"mean":48}}},"rest.allTeams":{"GET":{"200":{"75th":4,"count":1,"min":4,"max":4,"mRate":5.579377254639231E-198,"median":4,"99th":4,"mean":4}}},"api.v1.check-definitions.root":{"POST":{"200":{"75th":37,"count":16,"min":16,"max":541,"mRate":6.558193341682249E-226,"median":24,"99th":541,"mean":62}}},"api.v1.checks.all-active-check-definitions":{"HEAD":{"200":{"75th":2,"count":513,"min":1,"max":12,"99th":5,"median":2,"mRate":0.015767912619548248,"mean":2}},"GET":{"200":{"75th":18,"count":1,"min":18,"max":18,"99th":18,"median":18,"mRate":7.811065205966344E-225,"mean":18}}},"rest.alertDetails":{"GET":{"200":{"count":200,"75th":5,"min":2,"max":10,"mRate":1.9098330321301925E-198,"median":5,"99th":6,"mean":4}}},"signin":{"GET":{"200":{"count":523,"75th":3,"min":1,"max":385,"99th":6,"median":3,"mRate":0.015343754688965648,"mean":3}}},"rest.alertDefinitionChildren":{"GET":{"200":{"75th":6,"count":200,"min":1,"max":18,"99th":15,"median":3,"mRate":1.9098330321301925E-198,"mean":4}}},"rest.checkAlertResults":{"GET":{"200":{"count":200,"75th":5,"min":2,"max":12,"99th":5,"median":3,"mRate":1.9098330377329202E-198,"mean":3}}},"api.v1.entities":{"PUT":{"200":{"count":32,"75th":5,"min":3,"max":38,"mRate":1.425625380123519E-225,"median":4,"99th":38,"mean":5}},"GET":{"200":{"75th":3,"count":513,"min":2,"max":15,"99th":3,"median":3,"mRate":0.015360065420880269,"mean":2}}},"rest.alertDefinition":{"GET":{"200":{"count":200,"75th":7,"min":2,"max":25,"mRate":1.9098330321301925E-198,"median":5,"99th":25,"mean":6}}},"root":{"GET":{"200":{"75th":16,"count":9,"min":14,"max":121,"mRate":1.8141725137722233E-194,"median":16,"99th":18,"mean":15}}}},"captures":{}}],"active_alert_ids":[9]},{"entity":"zmon-eventlog-service-localhost[dc:1]","results":[{"td":0.014962,"worker":"plocal.zmon","ts":1.48503493074808E9,"value":{"metrics":{"GET":{"200":{"count":0,"75th":0,"min":0,"max":0,"mRate":0,"median":0,"99th":0}}},"root":{"PUT":{"200":{"count":7051,"75th":1,"min":0,"max":21,"99th":3,"median":1,"mRate":0.3423069936165549,"mean":1}},"GET":{"200":{"75th":8,"count":16,"min":3,"max":36,"mRate":0.021084004206463954,"median":5,"99th":8,"mean":6},"400":{"75th":1,"count":515,"min":0,"max":22,"99th":14,"median":1,"mRate":0.015343754688965648,"mean":2}}},"events":{"GET":{"200":{"count":1,"75th":80,"min":80,"max":80,"mRate":1.877541653836825E-228,"median":80,"99th":80,"mean":80}}}},"captures":{}}],"active_alert_ids":[9]}]
+    
+    var alert_list = { alerts: [] }
+    var dashboard_data = { alerts: alert_list, entities: entities, alert_data: alert_data, alert_def: alert_def, check_def: check_def, entities_details: entities_details }
+
+    
+    console.log(dashboard_data);
+
+    riot.mount('dashboard', dashboard_data);
+
+    start_app = function(alerts) {
+        console.log("got", alerts);
+        alert_list.alerts = alerts;
+        console.log("updated data", dashboard_data);
+        riot.update();
+    }
+
+    var updateriot = () => { riot.update(); }
+
+    $.get('/rest/allAlerts?team=*', start_app);
+</script>
+<a href="#" onclick="updateriot()">update</a>
+</body>
+
+</html>
