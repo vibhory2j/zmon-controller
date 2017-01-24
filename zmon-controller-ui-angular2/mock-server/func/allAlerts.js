@@ -31,6 +31,6 @@ module.exports = {
                         response.push(new Alert(i + Math.floor(Math.random() * (2001))));
                     }
 
-                    return JSON.stringify([ response ]);
+                    return JSON.stringify(response);
     }
 }
