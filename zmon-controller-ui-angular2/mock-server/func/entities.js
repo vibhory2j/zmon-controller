@@ -1,6 +1,7 @@
 module.exports = {
     entities: function() {
-        var response = [];
+        var response = [],
+            apps = [ "ZMON Controller", "Kubernetes", "Platform", "KairosDB", "Cassandra", "Very Long Application ID" ].sort();
 
         function Entity(id) {
             this.created_by = 'agent-' + id;
@@ -20,6 +21,7 @@ module.exports = {
             this.team = 'team';
             this.type = 'js';
             this.url = id + ':3000';
+            this.application_id = apps[id % apps.length];
         }
 
         for (var i=0; i<50; i++) {
