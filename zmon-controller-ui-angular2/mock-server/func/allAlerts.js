@@ -1,7 +1,9 @@
 module.exports = {
     allAlerts: function() {
-                    var response = [];
+                    const NUMBER_OF_ALERTS = 2000;
 
+                    var response = [];
+                    var ids = [];
                     var teams = [ "ZMON", "STUPS", "ACID", "EagleEye", "Platform", "24x7" ].sort();
                     var status = [ "ACTIVE", "INACTIVE", "DELETED" ];
                     var priorities = [1, 2, 3];
@@ -27,8 +29,13 @@ module.exports = {
                         this.entities = [];
                     }
 
-                    for (var i=0; i<2000; i++) {
-                        response.push(new Alert(i + Math.floor(Math.random() * (2001))));
+                    while (ids.length < NUMBER_OF_ALERTS) {
+                        var id = Math.floor(Math.random() * NUMBER_OF_ALERTS* 100);
+                        if (ids.indexOf(id) !== -1) {
+                            break;
+                        }
+                        ids.push(id);
+                        response.push(new Alert(id));
                     }
 
                     return JSON.stringify(response);
