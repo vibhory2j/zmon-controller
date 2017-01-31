@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { selectAlert, fetchAlertsIfNeeded, invalidateAlert } from './actions'
+import { Grid, Row, Col } from 'react-flexbox-grid/lib/index'
 import AppBar from 'material-ui/AppBar'
 import Avatar from 'material-ui/Avatar'
-import Badge from 'material-ui/Badge';
-import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
+import Badge from 'material-ui/Badge'
+import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import { indigo900, cyan50 } from 'material-ui/styles/colors'
 import RaisedButton from 'material-ui/RaisedButton'
 
@@ -63,8 +64,18 @@ class App extends Component {
                     title="ZMON"
                     iconElementRight={<User/>}>
                 </AppBar>
-                <AlertList alerts={alerts} />
-                <div id="alert-detail"></div>
+                <div className="content">
+                    <Grid>
+                        <Row>
+                        <Col xs={6} md={3}>
+                            <AlertList alerts={alerts} />
+                        </Col>
+                        <Col xs={6} md={9}>
+                            <div id="alert-detail"></div>
+                        </Col>
+                        </Row>
+                    </Grid>
+                </div>
                 <RaisedButton
                   label="Button"
                   secondary={true}
