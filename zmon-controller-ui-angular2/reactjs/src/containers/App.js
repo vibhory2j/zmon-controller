@@ -7,8 +7,8 @@ import { Grid, Row, Col } from 'react-flexbox-grid/lib/index'
 
 import { fetchAlertsIfNeeded } from '../actions/alerts'
 import { fetchUserData } from '../actions/user'
-import AlertList from '../components/AlertList'
 import AlertDetail from '../components/AlertDetail'
+import AlertList from '../components/AlertList'
 import UserControls from '../components/UserControls'
 
 
@@ -28,7 +28,7 @@ class App extends Component {
     }
 
     render() {
-        const { alerts, user, selectedAlert } = this.props
+        const { alerts, user, selectedAlert, data, entities } = this.props
         return (
             <div className="App">
                 <AppBar
@@ -38,11 +38,11 @@ class App extends Component {
                 <div className="content">
                     <Grid>
                         <Row>
-                        <Col xs={6} md={3}>
+                        <Col xs={12} md={3}>
                             <AlertList alerts={alerts} />
                         </Col>
                         <Col xs={6} md={9}>
-                            <AlertDetail alert={selectedAlert} />
+                            <AlertDetail alert={selectedAlert} data={data} entities={entities}/>
                         </Col>
                         </Row>
                     </Grid>
@@ -63,17 +63,23 @@ const mapStateToProps = state => {
         selectedAlert,
         isFetching,
         lastUpdated,
-        alerts
+        alerts,
+        data,
+        entities
     } = alertsReducer || {
           isFetching: true,
           alerts: [],
-          user: {}
+          user: {},
+          data: {},
+          entities: []
     }
 
     return {
         user: userReducer.user,
         selectedAlert,
         alerts,
+        data,
+        entities,
         isFetching,
         lastUpdated
     }

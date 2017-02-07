@@ -3,33 +3,40 @@ import { Row, Col } from 'react-flexbox-grid'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import ReactFlot from 'react-flot'
 
-import ApplicationItem from './application'
+import ApplicationItem from './ApplicationItem'
 
 class AlertDetail extends Component {
+
     render() {
-        let { alert } = this.props
-        let options = {}
-        let data = []
+        let { alert, data, entities } = this.props
+        let options = {
+            series: {
+                lines: { show: true },
+                points: { show: true }
+            }
+        }
+
+        const apps = entities ? [ ...new Set(entities.map(e => e.application_id)) ] : []
 
         const applications = (
-            <Col md={12}>
-                <Col md={2}><ApplicationItem /></Col>
-            </Col>
+            apps.map(app => <Col md={2} key={app}><ApplicationItem app={app}/></Col>)
         )
+
+        const chart = data ? (
+            <ReactFlot id="chart" data={data} options={options}/>
+        ) : null
 
         return !!alert ? (
             <div>
                 <Row>
                     <Col md={6}>
-                        <Card>
-                            <CardHeader title={"Detail " + alert.id} showExpandableButton={true} />
-                        </Card>
+                        <h1>{"Alert " + alert.id}</h1>
                     </Col>
                 </Row>
                 <Row>
-                    {applications}
-                </Row>
-                <Row>
+                    <Col md={6}>
+                        {applications}
+                    </Col>
                     <Col md={6}>
                         <Card>
                             <CardHeader
@@ -37,10 +44,11 @@ class AlertDetail extends Component {
                                 showExpandableButton={true}
                             />
                             <CardText>
-                                <ReactFlot id="chart" data={data} options={options}/>
+                                {chart}
                             </CardText>
                         </Card>
                     </Col>
+
                 </Row>
             </div>
         ) : null;

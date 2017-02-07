@@ -3,11 +3,6 @@ export const selectAlert = id => ({
   id
 })
 
-export const selectTest = test => ({
-    type: 'SELECT_TEST',
-    test
-})
-
 export const invalidateAlert = alert => ({
   type: 'INVALIDATE_ALERT',
   alert
@@ -33,11 +28,28 @@ export const receiveAlerts = (json) => ({
   receivedAt: Date.now()
 })
 
+export const requestEntities = () => ({
+    type: 'REQUEST_ENTITIES'
+})
+
+export const receiveEntities = (json) => ({
+    type: 'RECEIVE_ENTITIES',
+    entities: json,
+    receivedAt: Date.now()
+})
+
 export const fetchAlertChartData = () => dispatch => {
     dispatch(requestAlertChartData())
-    return fetch('http://localhost:3003/rest/chart')
+    return fetch('http://localhost:3003/rest/chart-data')
         .then(response => response.json())
         .then(json => dispatch(receiveAlertChartData(json)))
+}
+
+export const fetchEntities = () => dispatch => {
+    dispatch(requestEntities())
+    return fetch('http://localhost:3003/rest/entities')
+        .then(response => response.json())
+        .then(json => dispatch(receiveEntities(json)))
 }
 
 const fetchAlerts = () => dispatch => {
@@ -68,3 +80,11 @@ export const startPollAlerts = () => (dispatch, getState) => {
     dispatch(fetchAlertsIfNeeded())
     //setInterval(() => dispatch(fetchAlerts()), 5000)
 }
+
+export const clickAlert = id => (dispatch) => {
+    dispatch(selectAlert(id))
+    dispatch(fetchAlertChartData())
+    dispatch(fetchEntities())
+}
+
+

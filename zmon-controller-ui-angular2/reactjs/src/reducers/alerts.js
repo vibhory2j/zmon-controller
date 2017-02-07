@@ -20,7 +20,7 @@ const alertsReducer = (state = { alerts:[], isFetching: false }, action) => {
         case 'RECEIVE_ALERT_CHART_DATA':
             return {
                 ...state,
-                data: action.data,
+                data: Object.keys(action.data).map(k => action.data[k]),
                 lastUpdated: action.receivedAt
             }
         case 'REQUEST_ALERTS':
@@ -35,6 +35,19 @@ const alertsReducer = (state = { alerts:[], isFetching: false }, action) => {
                 isFetching: false,
                 didInvalidate: false,
                 alerts: action.alerts,
+                lastUpdated: action.receivedAt
+            }
+        case 'REQUEST_ENTITIES':
+            return {
+                ...state,
+                isFetching: true
+            }
+        case 'RECEIVE_ENTITIES':
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                entities: action.entities,
                 lastUpdated: action.receivedAt
             }
         default:
