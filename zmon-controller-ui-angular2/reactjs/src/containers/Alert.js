@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ListItem from 'material-ui/List'
 import { Card, CardHeader } from 'material-ui/Card'
-import { selectTest } from '../actions/alerts'
+import { selectAlert } from '../actions/alerts'
 
 const colors = {
     1: 'red',
@@ -12,12 +12,11 @@ const colors = {
 
 class Alert extends Component {
     handleClick = () =>  {
-        console.log('props', this.props)
-        this.props.dispatch(selectTest(this.props.alert.id.toString()))
+        this.props.dispatch(selectAlert(this.props.alert.id))
     }
 
     render() {
-        let alert = this.props.alert;
+        let { alert } = this.props;
         let style = {
             background: colors[alert.priority]
         }

@@ -5,7 +5,10 @@ import Alert from '../containers/Alert'
 class AlertList extends Component {
     render() {
         var alerts = this.props.alerts
-            .sort((a, b) => a.priority - b.priority)
+            .sort((a, b) => {
+                let x = a.priority - b.priority
+                return x === 0 ? a.id - b.id : x;
+            })
             .map((alert) =>
                 <Alert alert={alert} key={alert.id} />
             )
