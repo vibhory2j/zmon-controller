@@ -1,4 +1,7 @@
 var http = require('http'),
+    url = require('url'),
+    serveStatic = require('serve-static'),
+    finalhandler = require('finalhandler'),
     httpProxy = require('http-proxy');
 
 console.log("Use env vars to config: PROXY_URL, PROXY_TOKEN, PROXY_PORT")
@@ -9,6 +12,9 @@ console.log("PROXY_TOKEN: " + process.env.PROXY_TOKEN)
 var port = process.env.PROXY_PORT
 var proxy_url = process.env.PROXY_URL
 var token = process.env.PROXY_TOKEN
+var proxy_path = process.env.PROXY_APP_PATH
+
+console.log("PROXY_PATH: " + proxy_path)
 
 //
 // Create a proxy server with custom application logic
@@ -27,13 +33,21 @@ proxy.on('proxyReq', function(proxyReq, req, res, options) {
   proxyReq.setHeader('Cookie', 'ZMON_JWT=' + token);
 });
 
+var staticFiles = serveStatic(proxy_path, {})
+
 var server = http.createServer(function(req, res) {
   // You can define here your custom logic to handle the request
   // and then proxy the request.
-  proxy.web(req, res, {
-    target: proxy_url,
-    secure: false
-  });
+  pathName = url.parse(req.url).path;
+  if (!pathName.startsWith('/rest')) {
+      staticFiles(req, res, finalhandler(req, res))
+  }
+  else {
+      proxy.web(req, res, {
+        target: proxy_url,
+        secure: false
+      });
+  }
 });
 
 console.log("listening on port " + port)
