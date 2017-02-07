@@ -4,8 +4,8 @@ import ReactFlot from 'react-flot'
 
 class AlertDetail extends Component {
     render() {
-        let data = [[0,0]]
         let options = {}
+
         return (
             <div>
                 <Row>
@@ -15,7 +15,7 @@ class AlertDetail extends Component {
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <ReactFlot id="chart" data={data} options={options} />
+                        <ReactFlot id="chart" data={this.props.data} options={options} />
                     </Col>
                 </Row>
             </div>

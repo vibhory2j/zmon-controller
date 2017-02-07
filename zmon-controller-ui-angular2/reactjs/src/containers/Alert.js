@@ -1,20 +1,29 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import { connect } from 'react-redux'
 import ListItem from 'material-ui/List'
 import { Card, CardHeader } from 'material-ui/Card'
-import AlertDetail from './AlertDetail'
+import { selectTest } from '../actions/alerts'
+
+const colors = {
+    1: 'red',
+    2: 'orange',
+    3: 'lightgreen'
+}
 
 class Alert extends Component {
-
-    handleClick = () => {
-        ReactDOM.render(<AlertDetail alert={this.props.alert} />, document.getElementById('alert-detail'));
+    handleClick = () =>  {
+        console.log('props', this.props)
+        this.props.dispatch(selectTest(this.props.alert.id.toString()))
     }
 
     render() {
         let alert = this.props.alert;
+        let style = {
+            background: colors[alert.priority]
+        }
         return (
             <ListItem onClick={this.handleClick}>
-                <Card>
+                <Card style={style}>
                     <CardHeader
                         title={alert.name}
                         subtitle={alert.id + ' - ' + alert.team}
@@ -25,4 +34,4 @@ class Alert extends Component {
     }
 }
 
-export default Alert;
+export default connect()(Alert)
