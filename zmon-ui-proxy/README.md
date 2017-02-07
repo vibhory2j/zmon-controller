@@ -16,6 +16,7 @@ Run:
     PROXY_PORT=9999 \
     PROXY_TOKEN=<your cookie> \
     PROXY_URL=https://demo.zmon.io \
+    PROXY_APP_PATH=../zmon-controller-ui-angular2/riotjs \
     node proxy-with-jwt.js
 ```
 
