@@ -57,31 +57,26 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-    const { userReducer, alertsReducer } = state
+    const { userReducer, alertsReducer, selectedAlertReducer } = state
 
     const {
-        selectedAlert,
-        isFetching,
-        lastUpdated,
         alerts,
         data,
         entities
     } = alertsReducer || {
-          isFetching: true,
           alerts: [],
-          user: {},
           data: {},
           entities: []
     }
 
     return {
         user: userReducer.user,
-        selectedAlert,
+        selectedAlert: selectedAlertReducer.selectedAlert,
         alerts,
         data,
         entities,
-        isFetching,
-        lastUpdated
+        isFetching: alertsReducer.isFetching || userReducer.isFetching,
+        lastUpdated: alertsReducer.lastUpdated || userReducer.lastUpdated
     }
 }
 

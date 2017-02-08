@@ -5,9 +5,9 @@ import { Card, CardHeader } from 'material-ui/Card'
 import { clickAlert } from '../actions/alerts'
 
 const colors = {
-    1: 'red',
-    2: 'orange',
-    3: 'lightgreen'
+    1: '#FF0000',
+    2: '#FF9933',
+    3: '#66FF66'
 }
 
 class Alert extends Component {

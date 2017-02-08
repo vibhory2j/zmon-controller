@@ -1,12 +1,5 @@
 const alertsReducer = (state = { alerts:[], isFetching: false }, action) => {
     switch(action.type) {
-        case 'SELECT_ALERT':
-            return {
-                ...state,
-                selectedAlert: state.alerts.filter(
-                    alert => alert.id === action.id
-                )[0]
-            }
         case 'INVALIDATE_ALERT':
             return {
                 ...state,
@@ -34,7 +27,11 @@ const alertsReducer = (state = { alerts:[], isFetching: false }, action) => {
                 ...state,
                 isFetching: false,
                 didInvalidate: false,
-                alerts: action.alerts,
+                alerts: action.alerts
+                            .sort((a, b) => {
+                                let x = a.priority - b.priority
+                                return x === 0 ? a.id - b.id : x;
+                            }),
                 lastUpdated: action.receivedAt
             }
         case 'REQUEST_ENTITIES':
