@@ -1,11 +1,11 @@
 export const selectAlert = id => ({
-  type: 'SELECT_ALERT',
-  id
+    type: 'SELECT_ALERT',
+    id
 })
 
 export const invalidateAlert = alert => ({
-  type: 'INVALIDATE_ALERT',
-  alert
+    type: 'INVALIDATE_ALERT',
+    alert
 })
 
 export const requestAlertChartData = () => ({
@@ -19,13 +19,13 @@ export const receiveAlertChartData = (json) => ({
 })
 
 export const requestAlerts = () => ({
-  type: 'REQUEST_ALERTS'
+    type: 'REQUEST_ALERTS'
 })
 
 export const receiveAlerts = (json) => ({
-  type: 'RECEIVE_ALERTS',
-  alerts: json,
-  receivedAt: Date.now()
+    type: 'RECEIVE_ALERTS',
+    alerts: json,
+    receivedAt: Date.now()
 })
 
 export const requestEntities = () => ({
@@ -49,7 +49,7 @@ export const fetchEntities = () => dispatch => {
     dispatch(requestEntities())
     return fetch('http://localhost:3003/rest/entities')
         .then(response => response.json())
-        .then(json => dispatch(receiveEntities(json)))
+        .then(json => setTimeout(() => dispatch(receiveEntities(json)), 3000))
 }
 
 const fetchAlerts = () => dispatch => {
@@ -86,5 +86,3 @@ export const clickAlert = id => (dispatch) => {
     dispatch(fetchAlertChartData())
     dispatch(fetchEntities())
 }
-
-

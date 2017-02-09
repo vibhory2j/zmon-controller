@@ -29,6 +29,7 @@ class App extends Component {
 
     render() {
         const { alerts, user, selectedAlert, data, entities } = this.props
+        let alert = alerts.filter( a => a.id === selectedAlert )[0] || null
         return (
             <div className="App">
                 <AppBar
@@ -42,7 +43,9 @@ class App extends Component {
                             <AlertList alerts={alerts} />
                         </Col>
                         <Col xs={6} md={9}>
-                            <AlertDetail alert={selectedAlert} data={data} entities={entities}/>
+                            <AlertDetail alert={alert} data={data}
+                                entities={entities}
+                            />
                         </Col>
                         </Row>
                     </Grid>
