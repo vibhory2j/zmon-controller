@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { List } from 'material-ui/List'
-import Alert from '../containers/Alert'
+import Alert from '../components/Alert'
 
 class AlertList extends Component {
     render() {
