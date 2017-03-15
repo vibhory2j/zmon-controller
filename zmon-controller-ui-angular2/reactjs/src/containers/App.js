@@ -6,15 +6,13 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib/index'
 
 import { fetchAlertsIfNeeded } from '../actions/alerts'
-import { fetchUserData } from '../actions/user'
 import AlertDetail from '../components/AlertDetail'
 import AlertList from '../components/AlertList'
-import UserControls from '../components/UserControls'
+import UserControlsContainer from '../containers/UserControlsContainer'
 
 
 class App extends Component {
     static propTypes = {
-        user: PropTypes.object.isRequired,
         alerts: PropTypes.array.isRequired,
         isFetching: PropTypes.bool.isRequired,
         lastUpdated: PropTypes.number,
@@ -24,17 +22,16 @@ class App extends Component {
     componentDidMount() {
         const { dispatch } = this.props
         dispatch(fetchAlertsIfNeeded())
-        dispatch(fetchUserData())
     }
 
     render() {
-        const { alerts, user, selectedAlert, data, entities } = this.props
+        const { alerts, selectedAlert, data, entities } = this.props
         let alert = alerts.filter( a => a.id === selectedAlert )[0] || null
         return (
             <div className="App">
                 <AppBar
                     title="ZMON"
-                    iconElementRight={<UserControls user={user}/>}>
+                    iconElementRight={<UserControlsContainer />}>
                 </AppBar>
                 <div className="content">
                     <Grid>
@@ -60,7 +57,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-    const { userReducer, alertsReducer, selectedAlertReducer } = state
+    const { alertsReducer, selectedAlertReducer } = state
 
     const {
         alerts,
@@ -73,13 +70,12 @@ const mapStateToProps = state => {
     }
 
     return {
-        user: userReducer.user,
         selectedAlert: selectedAlertReducer.selectedAlert,
         alerts,
         data,
         entities,
-        isFetching: alertsReducer.isFetching || userReducer.isFetching,
-        lastUpdated: alertsReducer.lastUpdated || userReducer.lastUpdated
+        isFetching: alertsReducer.isFetching,
+        lastUpdated: alertsReducer.lastUpdated
     }
 }
 
