@@ -3,6 +3,7 @@
 lib
 node
 **/node_modules
+**/bower_components
 jspm_packages
 npm-debug.*
 link-checker-results.txt

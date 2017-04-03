@@ -1,6 +1,6 @@
-# \<alert-list\>
+# \<zmon\>
 
-displays a list of alerts
+Zalandos Monitoring Tool
 
 ## Install the Polymer-CLI
 

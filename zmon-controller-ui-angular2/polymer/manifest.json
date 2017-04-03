@@ -1,0 +1,7 @@
+{
+  "name": "zmon",
+  "short_name": "zmon",
+  "description": "Zalandos Monitoring Tool",
+  "start_url": "/",
+  "display": "standalone"
+}
