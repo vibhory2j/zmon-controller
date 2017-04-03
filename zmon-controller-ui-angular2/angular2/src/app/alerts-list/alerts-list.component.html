@@ -1,0 +1,8 @@
+<md-list>
+  <md-list-item *ngFor="let alert of alerts" (click)="onSelect(alert)">
+    <md-card>
+      <md-card-title>{{ alert.name }}</md-card-title>
+      <md-card-content>...</md-card-content>
+    </md-card>
+  </md-list-item>
+</md-list>

@@ -3,10 +3,10 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 export class AlertDefinition {
-    id: number;
-    name: string;
-    tags: string[];
-    priority: number;
+    constructor(
+      public id: number,
+      public name: string
+    ) { }
 }
 
 export class AlertValue {
@@ -47,7 +47,7 @@ export class AlertService {
     getAlerts(): Observable<Alert[]> {
         // rest/allAlerts?team=*
         return Observable.interval(3000).switchMap(() => this.http
-               .get('/rest/allAlerts?team=*')
+               .get('http://localhost:3003/rest/allAlerts')
         .map((r: Response) => { return r.json() as Alert[]; } ));
     }
 

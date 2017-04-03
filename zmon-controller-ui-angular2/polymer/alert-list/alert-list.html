@@ -1,0 +1,35 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`alert-list`
+displays a list of alerts
+
+@demo demo/index.html
+-->
+
+<dom-module id="alert-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    class MyElement extends Polymer.Element {
+      static get is() { return 'alert-list'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'alert-list'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(MyElement.is, MyElement);
+  </script>
+</dom-module>
