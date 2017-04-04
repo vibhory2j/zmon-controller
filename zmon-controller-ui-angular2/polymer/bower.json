@@ -12,7 +12,8 @@
     "iron-media-query": "PolymerElements/iron-media-query#2.0-preview",
     "paper-item": "PolymerElements/paper-item#2.0-preview",
     "paper-listbox": "2.0-preview",
-    "paper-tabs": "2.0-preview"
+    "paper-tabs": "2.0-preview",
+    "iron-pages": "2.0-preview"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",
