@@ -36,13 +36,12 @@
     app-header {
       @apply --layout-fixed-top;
       z-index: 1;
-      background-color: #ccc;
+      background-color: dodgerblue;
       --app-header-shadow: {
         box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.2);
         height: 10px;
         bottom: -10px;
       };
-      color: black;
     }
 
     paper-icon-button {
@@ -93,7 +92,6 @@
 
     #tabContainer {
       position: relative;
-      height: 66px;
     }
 
     zmon-tabs, zmon-tab {
@@ -234,7 +232,7 @@
             <paper-icon-button icon="arrow-back" aria-label="Go back"></paper-icon-button>
           </a>
         </div>
-        <div class="logo" main-title><a href="/" aria-label="ZMON">ZMON</a></div>
+        <div class="logo" main-title><a href="/" aria-label="ZMON">ZMON Polymer 2.0</a></div>
       </app-toolbar>
 
       <!-- Lazy-create the tabs for larger screen sizes. -->
@@ -254,7 +252,7 @@
 
     </app-header>
 
-    <!-- <dom-if if="[[_shouldRenderDrawer]]">
+    <dom-if if="[[_shouldRenderDrawer]]">
       <template>
       <app-drawer opened="{{drawerOpened}}" swipe-open tabindex="0">
         <iron-selector role="navigation" class="drawer-list" selected="[[categoryName]]" attr-for-selected="name">
@@ -266,12 +264,11 @@
         </iron-selector>
       </app-drawer>
       </template>
-    </dom-if> -->
+    </dom-if>
 
     <iron-pages role="main" selected="[[routeData.page]]" attr-for-selected="name" selected-attribute="visible" fallback-selection="404">
       <zmon-dashboard name="zmon-dashboard"></zmon-dashboard>
     </iron-pages>
-    <div>Page: [[routeData.page]]</div>
 
     <!-- a11y announcer -->
     <div class="announcer" aria-live="assertive">[[_a11yLabel]]</div>
