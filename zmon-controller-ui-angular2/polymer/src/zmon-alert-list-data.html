@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="zmon-alert-list-data">
+  <template>
+    <iron-ajax
+      auto
+      url="http://localhost:3003/rest/allAlerts"
+      handle-as="json"
+      on-response="onResponse"
+      id="xhr"></iron-ajax>
+  </template>
+
+  <script>
+    class ZmonAlertListData extends Polymer.Element {
+      static get is() { return 'zmon-alert-list-data'; }
+
+      static get properties() {
+        return {
+          alertList: {
+            type: Array,
+            notify: true
+          }
+        }
+      }
+
+      static get observers() {
+        return [ '_alertListChanged(alertList)' ];
+      }
+
+      _alertListChanged(alertList) {
+        this.alertList = alertList;
+      }
+
+      onResponse(data) {
+        this.alertList = data.detail.response;
+      }
+    }
+
+    customElements.define(ZmonAlertListData.is, ZmonAlertListData);
+  </script>
+</dom-module>

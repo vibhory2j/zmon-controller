@@ -1,0 +1,25 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="../src/zmon-alert-list-item.html">
+<link rel="import" href="../src/zmon-alert-list-data.html">
+
+<dom-module id="zmon-dashboard">
+
+  <template>
+    <zmon-alert-list-data alert-list={{alertList}}></zmon-alert-list-data>
+
+    <template is="dom-repeat" items="{{alertList}}">
+      <zmon-alert-list-item alert=[[item]]></zmon-alert-list-item>
+    </template>
+
+  </template>
+
+  <script>
+    class ZmonDashboard extends Polymer.Element {
+      static get is() { return 'zmon-dashboard'; }
+    }
+
+    customElements.define(ZmonDashboard.is, ZmonDashboard);
+  </script>
+</dom-module>

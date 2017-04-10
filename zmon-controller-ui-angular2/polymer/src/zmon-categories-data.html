@@ -1,0 +1,32 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<dom-module id="zmon-categories-data">
+  <script>
+    var categoryList = [
+      {
+        name: 'zmon-dashboard',
+        title: 'Dashboard'
+      },
+      {
+        name: 'alerts',
+        title: 'Alerts'
+      }
+    ];
+
+    class ZmonCategoriesData extends Polymer.Element {
+      static get is() { return 'zmon-categories-data'; }
+
+      static get properties() {
+        return {
+          categories: {
+            type: Array,
+            value: categoryList,
+            readOnly: true,
+            notify: true
+          }
+        }
+      }
+    }
+
+    customElements.define(ZmonCategoriesData.is, ZmonCategoriesData);
+  </script>
+</dom-module>

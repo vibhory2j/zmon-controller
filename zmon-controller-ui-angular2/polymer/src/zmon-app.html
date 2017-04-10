@@ -9,6 +9,8 @@
 <link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../src/zmon-categories-data.html">
+<link rel="import" href="../src/zmon-dashboard.html">
 
 <dom-module id="zmon-app">
   <template>
@@ -34,12 +36,13 @@
     app-header {
       @apply --layout-fixed-top;
       z-index: 1;
-      background-color: rgba(255, 255, 255, 0.95);
+      background-color: #ccc;
       --app-header-shadow: {
         box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.2);
         height: 10px;
         bottom: -10px;
       };
+      color: black;
     }
 
     paper-icon-button {
@@ -93,21 +96,21 @@
       height: 66px;
     }
 
-    shop-tabs, shop-tab {
-      --shop-tab-overlay: {
+    zmon-tabs, zmon-tab {
+      --zmon-tab-overlay: {
         border-bottom: 2px solid var(--app-accent-color);
       };
     }
 
-    shop-tabs {
+    zmon-tabs {
       height: 100%;
     }
 
-    shop-tab {
+    zmon-tab {
       margin: 0 10px;
     }
 
-    shop-tab a {
+    zmon-tab a {
       display: inline-block;
       outline: none;
       padding: 9px 5px;
@@ -150,7 +153,7 @@
       font-weight: bold;
     }
 
-    shop-cart-modal {
+    zmon-cart-modal {
       z-index: 2;
     }
 
@@ -216,6 +219,8 @@
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
+    <zmon-categories-data categories={{categories}}></zmon-categories-data>
+
     <app-header role="navigation" id="header" effects="waterfall" condenses reveals>
       <app-toolbar>
         <div class="left-bar-item">
@@ -225,7 +230,7 @@
               on-click="_toggleDrawer"
               aria-label="Categories">
           </paper-icon-button>
-          <a class="back-btn" href="/list/[[categoryName]]" tabindex="-1">
+          <a class="back-btn" href="/[[categoryName]]" tabindex="-1">
             <paper-icon-button icon="arrow-back" aria-label="Go back"></paper-icon-button>
           </a>
         </div>
@@ -234,42 +239,39 @@
 
       <!-- Lazy-create the tabs for larger screen sizes. -->
       <div id="tabContainer" sticky$="[[_shouldShowTabs]]" hidden$="[[!_shouldShowTabs]]">
-        <dom-if if="[[_shouldRenderTabs]]">
-          <template>
-            <shop-tabs
-                selected="[[categoryName]]"
-                attr-for-selected="name">
-              <dom-repeat items="[[categories]]" as="category" initial-count="4">
-                <template>
-                <shop-tab name="[[category.name]]">
-                  <a href="/list/[[category.name]]">[[category.title]]</a>
-                </shop-tab>
-                </template>
-              </dom-repeat>
-            </shop-tabs>
-          </template>
-        </dom-if>
+        <zmon-tabs
+            selected="[[categoryName]]"
+            attr-for-selected="name">
+          <dom-repeat items="[[categories]]" as="category" initial-count="1">
+            <template>
+            <zmon-tab name="[[category.name]]">
+              <a href="/[[category.name]]">[[category.title]]</a>
+            </zmon-tab>
+            </template>
+          </dom-repeat>
+        </zmon-tabs>
       </div>
 
     </app-header>
 
-    <dom-if if="[[_shouldRenderDrawer]]">
+    <!-- <dom-if if="[[_shouldRenderDrawer]]">
       <template>
-      <!-- Two-way bind `drawerOpened` since app-drawer can update `opened` itself. -->
       <app-drawer opened="{{drawerOpened}}" swipe-open tabindex="0">
         <iron-selector role="navigation" class="drawer-list" selected="[[categoryName]]" attr-for-selected="name">
           <dom-repeat items="[[categories]]" as="category" initial-count="4">
             <template>
-              <a name="[[category.name]]" href="/list/[[category.name]]">[[category.title]]</a>
+              <a name="[[category.name]]" href="/[[category.name]]">[[category.title]]</a>
             </template>
           </dom-repeat>
         </iron-selector>
       </app-drawer>
       </template>
-    </dom-if>
+    </dom-if> -->
 
-    <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="visible" fallback-selection="404">
+    <iron-pages role="main" selected="[[routeData.page]]" attr-for-selected="name" selected-attribute="visible" fallback-selection="404">
+      <zmon-dashboard name="zmon-dashboard"></zmon-dashboard>
     </iron-pages>
+    <div>Page: [[routeData.page]]</div>
 
     <!-- a11y announcer -->
     <div class="announcer" aria-live="assertive">[[_a11yLabel]]</div>
@@ -315,7 +317,7 @@
 
 
       created() {
-        window.performance && performance.mark && performance.mark('shop-app.created');
+        window.performance && performance.mark && performance.mark('zmon-app.created');
         // Custom elements polyfill safe way to indicate an element has been upgraded.
         this.removeAttribute('unresolved');
       }
@@ -329,21 +331,18 @@
       }
 
       _routePageChanged(page) {
-        // HACK(keanulee): Need to check if `page` actually changed due to polymer#3935.
-        if (this.page === 'list' && this.page !== page) {
-          this._listScrollTop = window.pageYOffset;
-        }
-
-        this.page = page || 'home';
+        console.log('route', page)
+        this.page = page || 'zmon-dashboard';
 
         // Close the drawer - in case the *route* change came from a link in the drawer.
         this.drawerOpened = false;
       }
 
       _pageChanged(page, oldPage) {
+        console.log('change', page, oldPage);
         if (page != null) {
           // home route is eagerly loaded
-          if (page == 'home') {
+          if (page == 'zmon-dashboard') {
             this._pageLoaded(Boolean(oldPage));
           // other routes are lazy loaded
           } else {
@@ -351,7 +350,7 @@
             // eagerly load the 404 page definition
             var cb = this._pageLoaded.bind(this, Boolean(oldPage));
             this.importHref(
-              this.resolveUrl('shop-' + page + '.html'),
+              this.resolveUrl('zmon-' + page + '.html'),
               cb, cb, true);
           }
         }
@@ -389,7 +388,7 @@
       }
 
       _computeShouldShowTabs(page, smallScreen) {
-        return (page === 'home' || page === 'list' || page === 'detail') && !smallScreen;
+        return (page === 'zmon-dashboard' || page === 'alerts') && !smallScreen;
       }
 
       _computeShouldRenderTabs(_shouldShowTabs, loadComplete) {
