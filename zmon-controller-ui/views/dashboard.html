@@ -81,9 +81,9 @@
             </span>
         </div>
         <div class="col-md-3" ng-show="!compact">
-            <a href="/grafana/dashboard/db/zmon-check-{{alertInstance.alert_definition.check_definition_id}}-{{ getEntityNames(alertInstance.entities, 1) }}">
+            <!-- <a href="/grafana/dashboard/db/zmon-check-{{alertInstance.alert_definition.check_definition_id}}-{{ getEntityNames(alertInstance.entities, 1) }}">
                 <chartd3 chart-data="charts[alertInstance.alert_definition.id]" id="alertInstance.alert_definition.id"></chart>
-            </a>
+            </a> -->
         </div>
         <div class="col-md-2">
             <div class="text-right responsible-team ellipsis" title="{{alertInstance.alert_definition.responsible_team}}">

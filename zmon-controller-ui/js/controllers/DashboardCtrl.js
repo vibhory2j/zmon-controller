@@ -33,7 +33,7 @@ angular.module('zmon2App').controller('DashboardCtrl', ['$scope', '$log', '$rout
             localStorageService.add('showWidgets', $scope.showWidgets);
         });
 
-        $scope.charts = {};
+        // $scope.charts = {};
 
         $scope.widgets = [];
         if ($scope.dashboardId > 0) {
@@ -210,12 +210,12 @@ angular.module('zmon2App').controller('DashboardCtrl', ['$scope', '$log', '$rout
                 CommunicationService.getCheckResultsChart(checkId, entity).then(
                     function(response) {
 
-                        // Format to array of objects for d3 processing
-                        var r = [];
-                        _.each(response.values, function(data, key) {
-                            r.push(data);
-                        });
-                        $scope.charts[alertId] = r;
+                        // // Format to array of objects for d3 processing
+                        // var r = [];
+                        // _.each(response.values, function(data, key) {
+                        //     r.push(data);
+                        // });
+                        // $scope.charts[alertId] = r;
 
                         // Store the response per checkId & per entity; to be used by the widgets
                         // so they don't have to do async getCheckResults() calls each one by itself
