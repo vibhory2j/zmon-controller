@@ -262,11 +262,11 @@ angular.module('zmon2App').controller('DashboardCtrl', ['$scope', '$log', '$rout
                         }
                     });
 
-                    // For each alert, load check results history to show on graph.
-                    _.each(data, function(alert) {
-                        alert.inException = $scope.hasAllEntitiesFailing(alert);
-                        loadCheckResults(alert);
-                    });
+                    // // For each alert, load check results history to show on graph.
+                    // _.each(data, function(alert) {
+                    //     alert.inException = $scope.hasAllEntitiesFailing(alert);
+                    //     loadCheckResults(alert);
+                    // });
 
                     // Determine if all entities of alert are in downtime
                     _.each(data, function(alert) {

@@ -93,6 +93,11 @@
             <div class="text-right oldest-timestamp">
                 {{timeSinceLastUpdate(alertInstance.oldestStartTime) | timespan}}
             </div>
+            <div class="text-right">
+                <a href="/grafana/dashboard/db/zmon-check-{{alertInstance.alert_definition.check_definition_id}}-{{ getEntityNames(alertInstance.entities, 1) }}">
+                    <i class="fa fa-fw fa-area-chart"></i>
+                </a>
+            </div>
         </div>
     </div>
 </div>
