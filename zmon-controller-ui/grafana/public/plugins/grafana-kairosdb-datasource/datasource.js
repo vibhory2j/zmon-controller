@@ -13,7 +13,8 @@ function (angular, _, sdk, dateMath, kbn) {
 
   function KairosDBDatasource(instanceSettings, $q, backendSrv, templateSrv) {
     this.type = instanceSettings.type;
-    this.url = instanceSettings.url;
+    // this.url = instanceSettings.url;
+    this.url = 'https://controller-grafana.zmon.zalan.do';
     this.name = instanceSettings.name;
     this.supportMetrics = true;
     this.q = $q;
