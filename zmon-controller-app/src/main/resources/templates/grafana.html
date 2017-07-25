@@ -374,36 +374,36 @@
         kairosDbSources.forEach(populateKairosdbSource);
 
         var mainNavLinks =  [
-			{
-				"text": "ZMON",
-				"icon": "icon-gf icon-gf-globe",
-				"url": "/"
-			},
-			{
-				"text": "Dashboards",
-				"icon": "icon-gf icon-gf-dashboard",
-				"url": "/grafana/",
-				"children": [
-					{
-						"text": "Home",
-						"url": "/grafana/"
-					},
-					{
-						"divider": true
-					},
-					{
-						"text": "New",
-						"icon": "fa fa-plus",
-						"url": "/grafana/dashboard/new"
-					},
-					{
-						"text": "Import",
-						"icon": "fa fa-download",
-						"url": "/grafana/import/dashboard"
-					}
-				]
-			}
-		];
+    			{
+    				"text": "ZMON",
+    				"icon": "icon-gf icon-gf-globe",
+    				"url": "/"
+    			},
+    			{
+    				"text": "Dashboards",
+    				"icon": "icon-gf icon-gf-dashboard",
+    				"url": "/grafana/",
+    				"children": [
+    					{
+    						"text": "Home",
+    						"url": "/grafana/"
+    					},
+    					{
+    						"divider": true
+    					},
+    					{
+    						"text": "New",
+    						"icon": "fa fa-plus",
+    						"url": "/grafana/dashboard/new"
+    					},
+    					{
+    						"text": "Import",
+    						"icon": "fa fa-download",
+    						"url": "/grafana/import/dashboard"
+    					}
+    				]
+    			}
+    		];
 
         window.grafanaBootData = {
             user: user,
