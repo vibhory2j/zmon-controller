@@ -12,13 +12,10 @@ perf.directive('performance', [function () {
         restrict: 'A',
         link: function (scope, element, attrs) {
 
-          console.log('linked')
-
             var startTime = (new Date).getTime();
             var divs = [];
 
             scope.$on('PERF_DONE', function (event, args) {
-                console.log('perf done')
                 var index = divs.indexOf(args);
                 if (index >= 0) divs.splice(index, 1);
 
@@ -39,7 +36,6 @@ perf.directive('performance', [function () {
             });
 
             scope.$on('PERF_REGISTER', function (event, args) {
-                console.log('register')
                 divs.push(args);
             });
         }
@@ -56,9 +52,6 @@ perf.directive('performanceLoaded', ['$timeout', function ($timeout) {
         restrict: 'A',
         link: function (scope, element, attrs) {
 
-            console.log('performanceLoaded linked')
-
-
             $timeout(function () {
                 scope.$emit('PERF_REGISTER', scope.$id);
             }, 0);
@@ -66,7 +59,6 @@ perf.directive('performanceLoaded', ['$timeout', function ($timeout) {
 
             $timeout(function() {
                 var unwatchLoaded = scope.$watch(attrs.performanceLoaded, function (newValue, oldValue) {
-                    console.log('watch', newValue, oldValue)
                     if (newValue) {
                         scope.$emit('PERF_DONE', scope.$id);
                         //Unregisters the $watch
